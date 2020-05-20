@@ -6,47 +6,46 @@
 trigger:
 - master
 
-strategy:
-  matrix:   
-    linux:
-      imageName: 'ubuntu-latest' 
-    windows:
-      imageName: 'windows-latest'
-      
-pool:
-  vmImage: $(imageName)
- 
-
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x, 12.x'
-  displayName: 'Install Node.js'
+jobs:
+- job: Linux      
+  pool:
+    vmImage: 'ubuntu-latest'  
 
-- script: |
-    npm install --prefix ./portal-app
-    npm run build --prefix ./portal-app
-  displayName: 'npm install and build'
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '12.x'
+    displayName: 'Install Node.js'
 
-- task: NuGetToolInstaller@1
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
+  - script: |
+      npm install
+      npm run build
+    displayName: 'npm install and build'
 
-- task: VSBuild@1
-  inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+- job: Windows
+  pool: 
+    vmImage: 'windows-latest'
 
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+  steps:
+  - task: NuGetToolInstaller@1
+  - task: NuGetCommand@2
+    inputs:
+      restoreSolution: '$(solution)'
+
+  - task: VSBuild@1
+    inputs:
+      solution: '$(solution)'
+      msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
+      platform: '$(buildPlatform)'
+      configuration: '$(buildConfiguration)'
+
+  - task: VSTest@2
+    inputs:
+      platform: '$(buildPlatform)'
+      configuration: '$(buildConfiguration)'
 
