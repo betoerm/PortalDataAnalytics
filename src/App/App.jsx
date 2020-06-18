@@ -8,6 +8,7 @@ import { PrivateRoute } from '../_components';
 import { HomePage } from '../HomePage';
 import { LoginPage } from '../LoginPage';
 import { RegisterPage } from '../RegisterPage';
+import { ToolCreatePage } from '../ToolsPages';
 
 class App extends React.Component {
     constructor(props) {
@@ -30,12 +31,13 @@ class App extends React.Component {
                         }
                         <Router history={history}>
                             <Switch>
-                                <PrivateRoute exact path="/" component={ HomePage } />
-                                <Route path="/login" component={ LoginPage } />
-                                <Route path="/register" component={ RegisterPage } />
+                                <PrivateRoute exact path="/" component={HomePage} />
+                                <Route path="/login" component={LoginPage} />
+                                <Route path="/register" component={RegisterPage} />
+                                <Route path="/toolcreate" component={ToolCreatePage} />
                                 <Redirect from="*" to="/" />
                             </Switch>
-                        </Router>   
+                        </Router>
                     </div>
                 </div>
             </div>
@@ -53,5 +55,4 @@ const actionCreators = {
 };
 
 const connectedApp = connect(mapState, actionCreators)(App);
-
 export { connectedApp as App };

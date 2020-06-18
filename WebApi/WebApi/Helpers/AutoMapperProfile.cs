@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using WebApi.Entities;
 using WebApi.Models.Users;
+using WebApi.Models.Tools;
 
 namespace WebApi.Helpers
 {
@@ -15,6 +16,9 @@ namespace WebApi.Helpers
             CreateMap<User, UserModel>();
             CreateMap<RegisterModel, User>();
             CreateMap<UpdateModel, User>();
+            CreateMap<Tool, ToolModel>();
+            CreateMap<RegisterModel, Tool>();
+            CreateMap<UpdateToolModel, Tool>();
         }
 
 

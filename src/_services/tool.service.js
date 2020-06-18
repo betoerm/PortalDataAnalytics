@@ -1,37 +1,14 @@
 import config from 'config';
 import { authHeader } from '../_helpers';
 
-export const userService = {
-    login,
-    logout,
-    register,
+export const toolService = {
+    create,  
     getAll,
     getById,
     update,
     delete: _delete
 };
 
-function login(username, password) {
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-    };
-
-    return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
-        .then(handleResponse)
-        .then(user => {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('user', JSON.stringify(user));
-
-            return user;
-        });
-}
-
-function logout() {
-    // remove user from local storage to log user out
-    localStorage.removeItem('user');
-}
 
 function getAll() {
     const requestOptions = {
@@ -39,7 +16,7 @@ function getAll() {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/tools`, requestOptions).then(handleResponse);
 }
 
 function getById(id) {
@@ -48,17 +25,17 @@ function getById(id) {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/tools/${id}`, requestOptions).then(handleResponse);
 }
 
-function register(user) {
+function create(tool) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
+        body: JSON.stringify(tool)
     };
 
-    return fetch(`${config.apiUrl}/users/register`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/tools`, requestOptions).then(handleResponse);
 }
 
 function update(user) {
@@ -68,7 +45,7 @@ function update(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(`${config.apiUrl}/users/${user.id}`, requestOptions).then(handleResponse);;
+    return fetch(`${config.apiUrl}/tools/${user.id}`, requestOptions).then(handleResponse);;
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -78,7 +55,7 @@ function _delete(id) {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/tools/${id}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

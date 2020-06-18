@@ -2,36 +2,29 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { userActions } from '../_actions';
+import {  toolActions } from '../_actions';
 
-class HomePage extends React.Component {
+
+class HomePage extends React.Component {    
+
     componentDidMount() {
-        this.props.getUsers();
-    }
-
-    handleDeleteUser(id) {
-        return (e) => this.props.deleteUser(id);
-    }
+        this.props.getAll();        
+    } 
 
     render() {
-        const { user, users } = this.props;
+        const { user, tools } = this.props;                    
         return (
             <div className="col-md-6 col-md-offset-3">
                 <h1>Hi {user.firstName}!</h1>
                 <p>You're logged in with React!!</p>
                 <h3>All registered users:</h3>
-                {users.loading && <em>Loading users...</em>}
-                {users.error && <span className="text-danger">ERROR: {users.error}</span>}
-                {users.items &&
+                {tools.loading && <em>Loading tools...</em>}
+                {tools.error && <span className="text-danger">ERROR: {tools.error}</span>}
+                {tools.items &&
                     <ul>
-                        {users.items.map((user, index) =>
-                            <li key={user.id}>
-                                {user.firstName + ' ' + user.lastName}
-                                {
-                                    user.deleting ? <em> - Deleting...</em>
-                                    : user.deleteError ? <span className="text-danger"> - ERROR: {user.deleteError}</span>
-                                    : <span> - <a onClick={this.handleDeleteUser(user.id)}>Delete</a></span>
-                                }
+                        {tools.items.map((tool, index) =>
+                            <li key={tool.id}>
+                                {tool.title}                                
                             </li>
                         )}
                     </ul>
@@ -39,22 +32,23 @@ class HomePage extends React.Component {
                 <p>
                     <Link to="/login">Logout</Link>
                 </p>
+                <p>
+                    <Link to="/toolcreate">Tool Create</Link>
+                </p>
             </div>
         );
     }
 }
 
 function mapState(state) {
-    const { users, authentication } = state;
+    const { tools, authentication} = state;
     const { user } = authentication;
-    return { user, users };
+    return { user, tools };
 }
 
 const actionCreators = {
-    getUsers: userActions.getAll,
-    deleteUser: userActions.delete
+    getAll: toolActions.getAll        
 }
 
 const connectedHomePage = connect(mapState, actionCreators)(HomePage);
-
 export { connectedHomePage as HomePage };

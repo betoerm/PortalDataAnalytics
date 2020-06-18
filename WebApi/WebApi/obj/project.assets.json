@@ -6149,11 +6149,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\DevWeb\\PIA\\Projeto Final\\Project\\WebApi\\WebApi\\WebApi.csproj",
+      "projectUniqueName": "C:\\Users\\caoae\\source\\repos\\PortalDataAnalytics\\WebApi\\WebApi\\WebApi.csproj",
       "projectName": "WebApi",
-      "projectPath": "D:\\DevWeb\\PIA\\Projeto Final\\Project\\WebApi\\WebApi\\WebApi.csproj",
+      "projectPath": "C:\\Users\\caoae\\source\\repos\\PortalDataAnalytics\\WebApi\\WebApi\\WebApi.csproj",
       "packagesPath": "C:\\Users\\caoae\\.nuget\\packages\\",
-      "outputPath": "D:\\DevWeb\\PIA\\Projeto Final\\Project\\WebApi\\WebApi\\obj\\",
+      "outputPath": "C:\\Users\\caoae\\source\\repos\\PortalDataAnalytics\\WebApi\\WebApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"

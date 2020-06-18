@@ -42,7 +42,7 @@ namespace WebApi
             // configure strongly typed settings objects
             var appSettingsSection = _configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
-
+            
             // configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
@@ -81,6 +81,7 @@ namespace WebApi
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IToolService, ToolService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
