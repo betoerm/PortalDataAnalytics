@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -8,7 +8,10 @@ import { PrivateRoute } from '../_components';
 import { HomePage } from '../HomePage';
 import { LoginPage } from '../LoginPage';
 import { RegisterPage } from '../RegisterPage';
-import { ToolCreatePage } from '../ToolsPages';
+import { ToolCreate, ToolUpdate } from '../ToolsPages';
+
+const ToolDetail = lazy(() => import("../ToolsPages/ToolDetail"));
+
 
 class App extends React.Component {
     constructor(props) {
@@ -23,24 +26,26 @@ class App extends React.Component {
     render() {
         const { alert } = this.props;
         return (
-            <div className="jumbotron">
-                <div className="container">
-                    <div className="col-sm-8 col-sm-offset-2">
-                        {alert.message &&
-                            <div className={`alert ${alert.type}`}>{alert.message}</div>
-                        }
+            
+                <div className="container">                    
+                    {alert.message &&
+                        <div className={`alert ${alert.type}`}>{alert.message}</div>
+                    }
+                    <Suspense fallback = {<h1> Loading... </h1>}>
                         <Router history={history}>
                             <Switch>
                                 <PrivateRoute exact path="/" component={HomePage} />
                                 <Route path="/login" component={LoginPage} />
                                 <Route path="/register" component={RegisterPage} />
-                                <Route path="/toolcreate" component={ToolCreatePage} />
+                                <Route path="/toolcreate" component={ToolCreate} />
+                                <Route path='/tooldetail/:id' component={ToolDetail} />
+                                <Route path='/toolupdate/:id' component={ToolUpdate} />
                                 <Redirect from="*" to="/" />
                             </Switch>
                         </Router>
-                    </div>
+                    </Suspense>                   
                 </div>
-            </div>
+            
         );
     }
 }

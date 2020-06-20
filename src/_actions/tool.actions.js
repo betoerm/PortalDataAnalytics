@@ -54,23 +54,23 @@ function getById(id){
     return dispatch => {
         dispatch(request(id));
 
-        toolService.getById()
+        toolService.getById(id)
             .then(
-                tool => dispatch(success(tools)),                    
+                tool => dispatch(success(tool)),                    
                 error => dispatch(failure(error.toString()))
-            );
+            );  
     };
 
-    function request() { return { type: toolConstants.GETALL_REQUEST } }
-    function success(tools) { return { type: toolConstants.GETALL_SUCCESS, tools } }
+    function request(id) { return { type: toolConstants.GETALL_REQUEST, id } }
+    function success(tool) { return { type: toolConstants.GETALL_SUCCESS, tool } }
     function failure(error) { return { type: toolConstants.GETALL_FAILURE, error } }
 }
 
-function update(id){
+function update(tools){
     return dispatch => {
-        dispatch(request(id));
+        dispatch(request(tools));
 
-        toolService.update(id)
+        toolService.update(tools)
             .then(
                 tool => {
                     dispatch(success(tools));

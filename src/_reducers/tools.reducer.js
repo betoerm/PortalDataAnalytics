@@ -15,6 +15,23 @@ export function tools(state = {}, action){
         return { 
             error: action.error
         };
+
+        case toolConstants.UPDATE_REQUEST:
+            return{
+                ...state,
+                items: state.items.map(tool =>
+                tool.id === action.id
+                    ? { ...tool, udpate: true }
+                    : tool
+                )
+            };
+        case toolConstants.UPDATE_SUCCESS:
+            return{
+                items: action.tools
+            };
+        case toolConstants.UPDATE_FAILURE:
+            return { ...tool, deleteError: action.error };
+
         case toolConstants.DELETE_REQUEST:
         // add 'deleting:true' property to user being deleted
         return {

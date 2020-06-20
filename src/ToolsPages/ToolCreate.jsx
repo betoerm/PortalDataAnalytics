@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { toolActions } from '../_actions';
 
-class ToolCreatePage extends React.Component {
+class ToolCreate extends React.Component {
     constructor(props) {
         super(props);
 
@@ -20,7 +20,7 @@ class ToolCreatePage extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-
+    
     handleChange(event) {
         const { name, value } = event.target;
         const { tool } = this.state;
@@ -91,5 +91,5 @@ const actionCreators = {
     create: toolActions.create
 }
 
-const connectedToolCreatePage = connect(mapState, actionCreators)(ToolCreatePage);
-export { connectedToolCreatePage as ToolCreatePage };
+const connectedToolCreate = connect(mapState, actionCreators)(ToolCreate);
+export { connectedToolCreate as ToolCreate };
