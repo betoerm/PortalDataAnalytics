@@ -6,6 +6,8 @@ import { Container, CardDeck} from 'react-bootstrap';
 import { toolService } from "../_services";
 import {  toolActions } from '../_actions';
 
+import NavComponent from '../_components/NavComponent';
+
 
 class ToolUpdate extends React.Component {     
     constructor(){
@@ -57,6 +59,7 @@ class ToolUpdate extends React.Component {
         const item = this.state;
         return (
             <Container>
+                <NavComponent/>
                 <div style={{ marginTop: 10 }}>
                     <h3 align="center">Atualizar dados</h3>
                     <form onSubmit={this.onSubmit}>

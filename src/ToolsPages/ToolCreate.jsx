@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import { Button, Container, Form} from 'react-bootstrap';
 import { toolActions } from '../_actions';
+import NavComponent from '../_components/NavComponent';
 
 class ToolCreate extends React.Component {
     constructor(props) {
@@ -46,11 +47,15 @@ class ToolCreate extends React.Component {
         const { creating  } = this.props;
         const { tool, submitted } = this.state;
         return (
-            <div className="col-md-6 col-md-offset-3">
-                <h2>Cadastrar</h2>
+            
+
+            <div>
+                <NavComponent/>
+                <h2 className="display-4 text-center">Cadastrar</h2>
+
                 <form name="form" onSubmit={this.handleSubmit}>
                     <div className={'form-group' + (submitted && tool.title ? ' has-error' : '')}>
-                        <label htmlFor="title">Title</label>
+                        <label htmlFor="title">Título</label>
                         <input type="text" className="form-control" name="title" value={tool.title} onChange={this.handleChange} />
                         {submitted && !tool.title &&
                             <div className="help-block">Title is required</div>
@@ -70,12 +75,12 @@ class ToolCreate extends React.Component {
                             <div className="help-block">URL is required</div>
                         }
                     </div>
-
                     <div className="form-group">
                         <button className="btn btn-primary">Create</button>
                         {creating}
                         <Link to="/" className="btn btn-link">Cancel</Link>
                     </div>
+
                 </form>
             </div>
         );

@@ -9,10 +9,15 @@ module.exports = {
         rules: [
             {
                 test: /\.jsx?$/,
-                loader: 'babel-loader'
+                loader: 'babel-loader',
+            },
+            { 
+                test: /\.svg?$/,
+                loader: 'svg-inline-loader'
+            
             }
-        ]
-    },
+        ],
+    },   
     plugins: [new HtmlWebpackPlugin({
         template: './src/index.html'
     })],
@@ -22,7 +27,7 @@ module.exports = {
     externals: {
         // global app config object
         config: JSON.stringify({
-            apiUrl: 'http://localhost:5000'
+            apiUrl: 'https://portalanalyticapi.azurewebsites.net'
         })
     }
 }

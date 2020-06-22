@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { userActions } from '../_actions';
+import { Container, Form, FormGroup, Button } from 'react-bootstrap';
+
+import logo from '../_assets/images/nature.svg';
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -40,32 +43,71 @@ class LoginPage extends React.Component {
         const { loggingIn } = this.props;
         const { username, password, submitted } = this.state;
         return (
-            <div className="col-md-6 col-md-offset-3">
-                <h2>Login</h2>
-                <form name="form" onSubmit={this.handleSubmit}>
+            <div className="container">                                
+                <form className="form-signin" name="form" onSubmit={this.handleSubmit}>                   
+                    <h2 className="display">Efetuar login no Portal Data & Analytics</h2>
+                    <p>Não tem uma conta? <Link to="/register">Registre-se</Link></p>
+
+
                     <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
-                        <label htmlFor="username">Username</label>
-                        <input type="text" className="form-control" name="username" value={username} onChange={this.handleChange} />
-                        {submitted && !username &&
-                            <div className="help-block">Username is required</div>
-                        }
+                        <label htmlFor="username">Usuário</label>
+                        <input type="text" className="form-control" name="username" value={username} onChange={this.handleChange} required autoFocus/> 
                     </div>
                     <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
-                        <label htmlFor="password">Password</label>
-                        <input type="password" className="form-control" name="password" value={password} onChange={this.handleChange} />
-                        {submitted && !password &&
-                            <div className="help-block">Password is required</div>
-                        }
+                        <label htmlFor="password">Senha</label>
+                        <input type="password" className="form-control" name="password" value={password} onChange={this.handleChange} required autoFocus/>                        
                     </div>
                     <div className="form-group">
-                        <button className="btn btn-primary">Login</button>
-                        {loggingIn &&
-                            <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                        }
-                        <Link to="/register" className="btn btn-link">Register</Link>
+                        <button type="submit" className="btn btn-lg btn-outline">Entrar</button>
+                        {loggingIn}                        
                     </div>
-                </form>
-            </div>
+                    
+                </form>                             
+           
+              
+                <style jsx="true">{`
+                        
+                        .container{
+                            display: flex;
+                            top: 75%;
+                            left: 50%;
+                            margin-top: 5%;                            
+                        }
+
+                        h1, .form-group {
+                            color: #14145a;
+                        }
+                        .btn{
+                            background-color: #14145a;
+                            color: white;
+                            width: 18rem;
+                            padding-rigth: 5px;
+                        }
+                        .display{
+                            font-size: 3.5rem;
+                            font-weight: 300;
+                            line-height: 1.2;
+                        }
+                        @media (min-width: 576px){
+                            .display{                                
+                                font-size: 4.0rem;
+                                font-weight: 300;
+                                line-height: 1.2;
+                            }      
+                            
+                            .form-signin{
+                                width: 60%
+                            }
+
+                            .form-group{
+                                width: 50%
+                            }
+                        }
+
+                        
+
+                `}</style>   
+            </div>          
         );
     }
 }

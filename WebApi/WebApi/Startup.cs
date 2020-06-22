@@ -96,7 +96,9 @@ namespace WebApi
             app.UseCors(x => x
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
-                .AllowAnyHeader());
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true)// allow any origin);
+                 .AllowCredentials());
 
             app.UseAuthentication();
             app.UseAuthorization();

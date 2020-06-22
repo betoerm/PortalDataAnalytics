@@ -6,7 +6,7 @@ import { Button } from 'react-bootstrap';
 import { toolService } from "../_services";
 import { history } from "../_helpers";
 
-
+import NavComponent from '../_components/NavComponent';
 
 function ToolDetail(item){
 
@@ -33,16 +33,16 @@ function ToolDetail(item){
     
 
     return (        
-        <div>             
-            <h1>Details</h1>
-            <span>{ tool.title }</span>        
-            <p>{ tool.description }</p>
-            <p>{ tool.url }</p>   
-            <Link to={`/toolupdate/${tool.id}`}>Editar</Link>          
-            <Link to="/" className="btn btn-link">Voltar</Link>
-
-            <Button onClick = {onDelete}>Excluir</Button>           
-                    
+        <div>            
+            <NavComponent/>
+            <div>
+                <h1 className="display-4">{tool.title}</h1>                 
+                <h2>Recursos</h2>
+                <p>{ tool.description }</p>
+                
+                <Link to={`/toolupdate/${tool.id}`}>Editar</Link>          
+                <Link to="/" className="btn btn-link">Voltar</Link>            
+            </div>                    
         </div>
     )
 }
