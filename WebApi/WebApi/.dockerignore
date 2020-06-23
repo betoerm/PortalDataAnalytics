@@ -4,5 +4,5 @@
 **/.vs
 **/.vscode
 **/*.*proj.user
-**/bin
-**/obj
+bin/
+obj/

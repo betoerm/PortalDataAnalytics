@@ -19,6 +19,7 @@ namespace WebApi
     {
         private readonly IWebHostEnvironment _env;
         private readonly IConfiguration _configuration;
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         public Startup(IWebHostEnvironment env, IConfiguration configuration)
         {
@@ -30,12 +31,29 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             // use sql server db in production and sqlite db in development
-            if (_env.IsProduction())
+              //if (_env.IsProduction())
                 services.AddDbContext<DataContext>();
-            else
+            /*else
                 services.AddDbContext<DataContext, SqliteDataContext>();
+            services.AddDbContext<DataContext>(options =>
+                options.UseSqlServer(_configuration.GetConnectionString("MyDbConnection"))
+            );*/
 
-            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost:8080",
+                                                          "http://localhost:5000")
+                                        //.AllowAnyOrigin()
+                                        .AllowAnyMethod()
+                                        .AllowAnyHeader()
+                                        .SetIsOriginAllowed(origin => true)// allow any origin);
+                                        .AllowCredentials();
+                                  });
+            });
+
             services.AddControllers();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -88,17 +106,12 @@ namespace WebApi
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataContext dataContext)
         {
             // migrate any database changes on startup (includes initial db creation)
-            dataContext.Database.Migrate();
+                //dataContext.Database.Migrate();
 
             app.UseRouting();
 
             // global cors policy
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .SetIsOriginAllowed(origin => true)// allow any origin);
-                 .AllowCredentials());
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthentication();
             app.UseAuthorization();
